@@ -1,4 +1,3 @@
-```markdown
 # Lockboxes
 
 ## Introduction
@@ -50,10 +49,6 @@ print(canUnlockAll(boxes))  # Output: False
 - Code should use the PEP 8 style (version 1.7.x)
 - All files must be executable
 
-## Author
-This script was written by [Your Name].
-
 ## Acknowledgments
 - This project is part of the ALX Software Engineering program.
 - Inspiration for this project came from a coding interview question.
-```
