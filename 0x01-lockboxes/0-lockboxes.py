@@ -1,11 +1,12 @@
 #!/usr/bin/python3
 "Lock Boxes"
 
+
 def canUnlockAll(boxes):
     """ Determines if all boxes can be opened. """
     if not boxes:
         return False
-    
+
     nb = len(boxes)
     seen = set()
     queue = [0]
