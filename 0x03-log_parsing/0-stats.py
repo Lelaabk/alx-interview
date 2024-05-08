@@ -5,7 +5,7 @@ import sys
 
 def print_line(dict_l, total_sz):
     """
-    Parse a log line and extract 
+    Parse a log line and extract
     IP address, status code, and file size.
     """
 
@@ -19,13 +19,13 @@ total_sz = 0
 code = 0
 c = 0
 dict_l = {"200": 0,
-           "301": 0,
-           "400": 0,
-           "401": 0,
-           "403": 0,
-           "404": 0,
-           "405": 0,
-           "500": 0}
+          "301": 0,
+          "400": 0,
+          "401": 0,
+          "403": 0,
+          "404": 0,
+          "405": 0,
+          "500": 0}
 
 try:
     for line in sys.stdin:
