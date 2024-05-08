@@ -4,7 +4,7 @@ UTF-8 Validation
 """
 
 
-def validYTF8(data):
+def validUTF8(data):
     """ Determine if given dataset is valid UTF-8 encoding."""
     # Number of bytes
     nb_b = 0
