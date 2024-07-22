@@ -1,26 +1,28 @@
 #!/usr/bin/node
-/* Prints all casts of Star Wars movie */
+/* Prints all Casts of Star Wars movie
+Read the README.md file for more info
+*/
 
-const req = require('request');
-const swAPI = 'https://swapi-api.alx-tools.com/api/';
+const request = require('request');
+const starWarsAPI = 'https://swapi-api.alx-tools.com/api/';
 const endPoint = 'films/';
 const movieID = process.argv[2].toString();
 
-request(swAPI + endPoint + movieID, function (error, _, body) {
-    if (error)
-        console.error(error);
-    const objects = JSON.parse(body);
-    const casts = objects.characters;
-    printRes(casts);
+request(starWarsAPI + endPoint + movieID, function (error, _, body) {
+  if (error) console.error(error);
+  const objects = JSON.parse(body);
+  const casts = objects.characters;
+  Printresult(casts);
 });
 
-function printRes (casts, c = 0) {
-    request(casts[c], function (error, _, body) {
-        if (error)
-            console.error(error);
-        console.log(JSON.parse(body).name);
-        if (++c < casts.length) {
-            printRes(casts, c++);
-        }
-    });
+/* reculsively and synchronously request for each character
+and prints out casts */
+function Printresult (casts, counter = 0) {
+  request(casts[counter], function (error, _, body) {
+    if (error) console.error(error);
+    console.log(JSON.parse(body).name);
+    if (++counter < casts.length) {
+      Printresult(casts, counter++);
+    }
+  });
 }
