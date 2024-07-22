@@ -62,3 +62,4 @@ if __name__ == '__main__':
     nqueens = ChessBoard(int(sys.argv[1]))
     for queens in nqueens:
         print(queens)
+
