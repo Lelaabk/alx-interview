@@ -3,48 +3,52 @@
 import sys
 
 
-def print_line(dict_l, total_sz):
+def print_msg(dict_sc, total_file_size):
     """
-    Parse a log line and extract
-    IP address, status code, and file size.
+    Method to print
+    Args:
+        dict_sc: dict of status codes
+        total_file_size: total of the file
+    Returns:
+        Nothing
     """
 
-    print("File size: {}".format(total_sz))
-    for key, val in sorted(dict_l.items()):
+    print("File size: {}".format(total_file_size))
+    for key, val in sorted(dict_sc.items()):
         if val != 0:
             print("{}: {}".format(key, val))
 
 
-total_sz = 0
+total_file_size = 0
 code = 0
-c = 0
-dict_l = {"200": 0,
-          "301": 0,
-          "400": 0,
-          "401": 0,
-          "403": 0,
-          "404": 0,
-          "405": 0,
-          "500": 0}
+counter = 0
+dict_sc = {"200": 0,
+           "301": 0,
+           "400": 0,
+           "401": 0,
+           "403": 0,
+           "404": 0,
+           "405": 0,
+           "500": 0}
 
 try:
     for line in sys.stdin:
-        parsed_l = line.split()
-        parsed_l = parsed_l[::-1]
+        parsed_line = line.split()  # ✄ trimming
+        parsed_line = parsed_line[::-1]  # inverting
 
-        if len(parsed_l):
-            c += 1
+        if len(parsed_line) > 2:
+            counter += 1
 
-            if c <= 10:
-                total_sz += int(parsed_l[0])
-                code = parsed_l[1]
+            if counter <= 10:
+                total_file_size += int(parsed_line[0])  # file size
+                code = parsed_line[1]  # status code
 
-                if (code in dict_l.keys()):
-                    dict_l[code] += 1
+                if (code in dict_sc.keys()):
+                    dict_sc[code] += 1
 
-            if (c == 10):
-                print_line(dict_l, total_sz)
-                c = 0
+            if (counter == 10):
+                print_msg(dict_sc, total_file_size)
+                counter = 0
 
 finally:
-    print_line(dict_l, total_sz)
+    print_msg(dict_sc, total_file_size)
