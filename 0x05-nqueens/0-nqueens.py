@@ -1,65 +1,62 @@
 #!/usr/bin/python3
 """
-Method that calculates the non-attacking nqueens of
-n * n board
+Method to solve the N Queens problem on an N x N chessboard
+using backtracking.
 """
-
 import sys
 
 
-def ChessBoard(n: int):
-    """Program that solves the N queens problem with backtracking algorithm"""
-    res = list()
+def solve_n_queens(board_size):
+    """Solves the N Queens problem using backtracking."""
 
-    def checkBoard(row, col, c_r):
-        """Checks if queen can be placed without attacking other queens"""
-        for r in range(row):
-            if row - r == abs(col - c_r[r]):
+    def is_position_valid(pos, occupied_pos):
+        """Checks if placing a queen at the given column position is valid."""
+        for i in range(len(occupied_pos)):
+            if (
+                occupied_pos[i] == pos or
+                occupied_pos[i] - i == pos - len(occupied_pos) or
+                occupied_pos[i] + i == pos + len(occupied_pos)
+            ):
                 return False
-            return True
+        return True
+
+    def place_queens_on_board(board_size, index, occupied_pos, solutions):
+        """Recursively places queens on the board and records valid solutions."""
+        if index == board_size:
+            solutions.append(occupied_pos[:])
+            return
+
+        for i in range(board_size):
+            if is_position_valid(i, occupied_pos):
+                occupied_pos.append(i)
+                place_queens_on_board(board_size, index + 1, occupied_pos, solutions)
+                occupied_pos.pop()
+
+    solutions = []
+    place_queens_on_board(board_size, 0, [], solutions)
+    return solutions
 
 
-    def saveBoard(row, cols, c_r):
-        """Saves the current state (position of the queens) of the board"""
-        if row == n:
-            con_result = []
-            for r in range(n):
-                temp_res = []
-                for c in range(n):
-                    if c == c_r[r]:
-                        temp_result.append(r)
-                        temp_result.append(c_r[r])
-                        con_result.append(temp_res)
-                if len(con_result) == n:
-                    res.append(con_result)
-                    temp_result, con_result = [], []
-
-
-    def placeQueen(row, cols, c_r):
-        """Places N non-attacking queens on an N * N chessboard"""
-        saveBoard(row, cols, c_r)
-        for col in range(n):
-            if cols[col] == 0 and checkBoard(row, col, c_r):
-                cols[col] = 1
-                c_r[row] = col
-                placeQueen(row + 1, cols, c_r)
-                cols[col] = 0
-    placeQueen(0, [0]*n, [0]*n)
-    return res
-
-
-if __name__ == '__main__':
+def main():
+    """Main function to handle user input and output solutions."""
     if len(sys.argv) != 2:
         print("Usage: nqueens N")
         sys.exit(1)
-    if sys.argv[1].isdigit() is False:
+
+    try:
+        board_size = int(sys.argv[1])
+    except ValueError:
         print("N must be a number")
         sys.exit(1)
-    if int(sys.argv[1]) < 4:
+
+    if board_size < 4:
         print("N must be at least 4")
         sys.exit(1)
 
-    nqueens = ChessBoard(int(sys.argv[1]))
-    for queens in nqueens:
-        print(queens)
+    solutions = solve_n_queens(board_size)
+    for solution in solutions:
+        print([[i, solution[i]] for i in range(len(solution))])
 
+
+if __name__ == "__main__":
+    main()
