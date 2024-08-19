@@ -9,7 +9,8 @@ Given a pile of coins of different values, the task is to determine the fewest n
 Function Prototype:
 ```python
 def makeChange(coins, total):
-    """ Returns the fewest number of coins needed to meet total """
+    """ Determine fewest number of coins needed to meet
+    given amount total """
 ```
 
 **Parameters:**
