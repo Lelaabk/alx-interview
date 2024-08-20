@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
-Function that determines fewest number of coins
-needed to meet total
+Function that determines fewest number
+of coins needed to meet total
 """
 
 
@@ -12,7 +12,7 @@ def makeChange(coins, total):
     """
     if total < 1:
         return 0
-    
+
     change = -1
 
     if len(coins):
