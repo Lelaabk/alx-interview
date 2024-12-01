@@ -1,62 +1,44 @@
 #!/usr/bin/python3
-"""
-Method to solve the N Queens problem on an N x N chessboard
-using backtracking.
-"""
+""" N queens """
 import sys
 
 
-def solve_n_queens(board_size):
-    """Solves the N Queens problem using backtracking."""
+if len(sys.argv) > 2 or len(sys.argv) < 2:
+    print("Usage: nqueens N")
+    exit(1)
 
-    def is_position_valid(pos, occupied_pos):
-        """Checks if placing a queen at the given column position is valid."""
-        for i in range(len(occupied_pos)):
-            if (
-                occupied_pos[i] == pos or
-                occupied_pos[i] - i == pos - len(occupied_pos) or
-                occupied_pos[i] + i == pos + len(occupied_pos)
-            ):
-                return False
-        return True
+if not sys.argv[1].isdigit():
+    print("N must be a number")
+    exit(1)
 
-    def place_queens_on_board(board_size, index, occupied_pos, solutions):
-        """Recursively places queens on the board and records valid solutions."""
-        if index == board_size:
-            solutions.append(occupied_pos[:])
-            return
+if int(sys.argv[1]) < 4:
+    print("N must be at least 4")
+    exit(1)
 
-        for i in range(board_size):
-            if is_position_valid(i, occupied_pos):
-                occupied_pos.append(i)
-                place_queens_on_board(board_size, index + 1, occupied_pos, solutions)
-                occupied_pos.pop()
-
-    solutions = []
-    place_queens_on_board(board_size, 0, [], solutions)
-    return solutions
+n = int(sys.argv[1])
 
 
-def main():
-    """Main function to handle user input and output solutions."""
-    if len(sys.argv) != 2:
-        print("Usage: nqueens N")
-        sys.exit(1)
-
-    try:
-        board_size = int(sys.argv[1])
-    except ValueError:
-        print("N must be a number")
-        sys.exit(1)
-
-    if board_size < 4:
-        print("N must be at least 4")
-        sys.exit(1)
-
-    solutions = solve_n_queens(board_size)
-    for solution in solutions:
-        print([[i, solution[i]] for i in range(len(solution))])
+def queens(n, i=0, a=[], b=[], c=[]):
+    """ find possible positions """
+    if i < n:
+        for j in range(n):
+            if j not in a and i + j not in b and i - j not in c:
+                yield from queens(n, i + 1, a + [j], b + [i + j], c + [i - j])
+    else:
+        yield a
 
 
-if __name__ == "__main__":
-    main()
+def solve(n):
+    """ solve """
+    k = []
+    i = 0
+    for solution in queens(n, 0):
+        for s in solution:
+            k.append([i, s])
+            i += 1
+        print(k)
+        k = []
+        i = 0
+
+
+solve(n)
